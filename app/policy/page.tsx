@@ -82,6 +82,12 @@ function ReturnandRefund() {
             Any changes to the reservation must be made at least 24 hours before
             the scheduled trip start time and are subject to availability.
           </li>
+          <li>
+            If refund is approved then the amount will be credited to the
+            original payment methods in 7 – 10 working days. If more than 15
+            business days have passed since we’ve approved your refund, please
+            contact us at itcashutosh@gmail.com
+          </li>
         </ul>
       </div>
     </div>
