@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Providers } from "./provider";
+import ReduxProvider from "@components/ReduxProvider";
 
 export const metadata = {
   title: "Indore Taxi",
@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="relative">
-        <Providers>{children}</Providers>
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );

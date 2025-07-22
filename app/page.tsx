@@ -1,6 +1,7 @@
 "use client";
-import { HomeProps } from "@types";
+import { HomeProps, TravelPackage } from "@types";
 import { CarCard, Hero, Footer, NavBar } from "@components/index";
+import TourPackagePreviewCard from "@components/tour-package/preview-tour-card";
 import { useEffect, useState } from "react";
 import {
   DocumentData,
@@ -10,11 +11,16 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "@firebase/config";
+import { createClient } from "@utils/supabase/client";
 import MapDetail from "@components/MapBox";
 
-export default function Home({ searchParams }: HomeProps) {
+export default function Home() {
   const [allCars, setallCars] = useState<DocumentData | []>([]);
+  const [allPackages, setAllPackages] = useState<TravelPackage[]>([]);
   const [isLoading, setisLoading] = useState(false);
+  const [isPackagesLoading, setIsPackagesLoading] = useState(false);
+  const supabase = createClient();
+
   useEffect(() => {
     setisLoading(true);
 
@@ -39,13 +45,44 @@ export default function Home({ searchParams }: HomeProps) {
 
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    const fetchTravelPackages = async () => {
+      setIsPackagesLoading(true);
+      try {
+        const { data: packages, error } = await supabase
+          .from("travel_packages")
+          .select("*")
+          .eq("is_published", true)
+          .eq("status", "published")
+          .order("created_at", { ascending: false })
+          .limit(6);
+
+        if (error) {
+          console.error("Error fetching travel packages:", error);
+        } else {
+          setAllPackages(packages || []);
+        }
+      } catch (error) {
+        console.error("Error fetching travel packages:", error);
+      } finally {
+        setIsPackagesLoading(false);
+      }
+    };
+
+    fetchTravelPackages();
+  }, []);
+
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
+  const isPackagesEmpty = !Array.isArray(allPackages) || allPackages.length < 1;
 
   return (
     <div>
       <main className="overflow-hidden">
         <NavBar></NavBar>
         <Hero />
+
+        {/* Travel Packages Section */}
 
         <div className="mt-12 padding-x padding-y max-width" id="discover">
           <div className="home__text-container">
@@ -66,7 +103,7 @@ export default function Home({ searchParams }: HomeProps) {
             <section>
               <div className="home__cars-wrapper">
                 {allCars?.map((car) => (
-                  <CarCard car={car} isAdmin={false} />
+                  <CarCard key={car.id} car={car} isAdmin={false} />
                 ))}
               </div>
             </section>
@@ -76,6 +113,33 @@ export default function Home({ searchParams }: HomeProps) {
             </div>
           )}
         </div>
+        <div className="mt-12 padding-x padding-y max-width">
+          <div className="home__text-container">
+            <h1 className="text-4xl font-extrabold">Featured Tour Packages</h1>
+            <p>Explore our amazing travel packages and destinations</p>
+          </div>
+
+          {!isPackagesEmpty ? (
+            <section className="mt-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {allPackages.map((pkg, index) => (
+                  <TourPackagePreviewCard
+                    key={pkg.id}
+                    pkg={pkg}
+                    index={index}
+                  />
+                ))}
+              </div>
+            </section>
+          ) : (
+            <div className="home__error-container">
+              <h2 className="text-black text-xl font-bold">
+                No travel packages available
+              </h2>
+            </div>
+          )}
+        </div>
+
         <MapDetail />
       </main>
       <Footer />

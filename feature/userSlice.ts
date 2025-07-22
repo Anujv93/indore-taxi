@@ -19,7 +19,7 @@ export const userSlice = createSlice({
 
 export const { login, logout } = userSlice.actions;
 
-// selectors
-export const selectUser = (state) => state.user;
+// selectors - fix the selector to access the correct state path
+export const selectUser = (state: any) => state.user.user;
 
 export default userSlice.reducer;

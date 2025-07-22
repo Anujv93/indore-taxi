@@ -62,3 +62,31 @@ export interface SearchManuFacturerProps {
   manufacturer: string;
   setManuFacturer: (manufacturer: string) => void;
 }
+
+export interface TravelPackage {
+  id: string;
+  org_id: string;
+  title: string;
+  slug: string;
+  duration: string;
+  start_location: string;
+  end_location: string;
+  route: string[] | null;
+  short_description: string;
+  full_description: string | null;
+  itinerary: any;
+  base_price: number | null;
+  per_person_cost: number | null;
+  include_gst: boolean;
+  discount_percentage: number;
+  inclusions: string[] | null;
+  exclusions: string[] | null;
+  thumbnail_image: string | null;
+  gallery_images: string[] | null;
+  cover_image: string | null;
+  status: string | null;
+  is_published: boolean;
+  created_at: string | null;
+  updated_at: string | null;
+  featured?: boolean;
+}
