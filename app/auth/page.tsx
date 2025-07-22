@@ -2,6 +2,7 @@
 import { login, logout, selectUser } from "@feature/userSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ReduxProvider from "@components/ReduxProvider";
 
 import { auth } from "@firebase/config";
 
@@ -9,11 +10,11 @@ import Login from "@app/admin/login/page";
 import { redirect } from "next/navigation";
 import { Spinner } from "flowbite-react";
 
-function App() {
+function AuthApp() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [isLoading, setisLoading] = useState(false);
-  
+
   useEffect(() => {
     setisLoading(true);
     const unsuscribe = auth.onAuthStateChanged((userAuth) => {
@@ -41,4 +42,11 @@ function App() {
   );
 }
 
-export default App;
+// Wrap the component with ReduxProvider only for this auth page
+export default function App() {
+  return (
+    <ReduxProvider>
+      <AuthApp />
+    </ReduxProvider>
+  );
+}

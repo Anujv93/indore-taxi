@@ -39,14 +39,31 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Define public routes that don't require authentication
+  const publicRoutes = [
+    "/",
+    "/tours",
+    "/policy",
+    "/terms-condition",
+    "/login",
+    "/auth",
+  ];
+
+  const isPublicRoute = publicRoutes.some(
+    (route) =>
+      request.nextUrl.pathname === route ||
+      request.nextUrl.pathname.startsWith(route + "/")
+  );
+
+  // Only redirect to login for admin routes when user is not authenticated
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
+    request.nextUrl.pathname.startsWith("/admin") &&
+    !request.nextUrl.pathname.startsWith("/admin/login")
   ) {
-    // no user, potentially respond by redirecting the user to the login page
+    // no user, redirect to admin login page
     const url = request.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = "/admin/login";
     return NextResponse.redirect(url);
   }
 

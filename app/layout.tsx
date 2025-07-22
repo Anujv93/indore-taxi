@@ -1,5 +1,4 @@
 import "./globals.css";
-import ReduxProvider from "@components/ReduxProvider";
 
 export const metadata = {
   title: "Indore Taxi",
@@ -13,9 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="relative">
-        <ReduxProvider>{children}</ReduxProvider>
-      </body>
+      <body className="relative">{children}</body>
     </html>
   );
 }
