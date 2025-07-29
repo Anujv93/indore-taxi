@@ -34,7 +34,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 items-start">
             {/* Call Button */}
             <a
-              href="tel:+919876543210"
+              href="tel: +918109077400"
               className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl flex items-center gap-3 min-w-[280px] justify-center"
             >
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
@@ -59,7 +59,7 @@ const Hero = () => {
 
             {/* WhatsApp Button */}
             <a
-              href="https://wa.me/919876543210?text=Hi,%20I%20want%20to%20book%20a%20taxi%20in%20Indore"
+              href="https://wa.me/918109077400?text=Hi,%20I%20want%20to%20book%20a%20taxi%20in%20Indore"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative overflow-hidden bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl flex items-center gap-3 min-w-[280px] justify-center"
