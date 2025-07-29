@@ -80,7 +80,11 @@ export default function BookingTable() {
         </Table.Head>
         <Table.Body className="divide-y">
           {isLoading ? (
-            <Spinner size="lg" className="text-center" />
+            <Table.Row>
+              <Table.Cell colSpan={6} className="text-center">
+                <Spinner size="lg" />
+              </Table.Cell>
+            </Table.Row>
           ) : (
             bookings.map((booking) => (
               <Table.Row

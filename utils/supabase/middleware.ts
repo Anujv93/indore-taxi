@@ -56,10 +56,12 @@ export async function updateSession(request: NextRequest) {
   );
 
   // Only redirect to login for admin routes when user is not authenticated
+  // Skip admin routes since they use Firebase auth, not Supabase
   if (
     !user &&
     request.nextUrl.pathname.startsWith("/admin") &&
-    !request.nextUrl.pathname.startsWith("/admin/login")
+    !request.nextUrl.pathname.startsWith("/admin/login") &&
+    false // Disable this redirect for admin routes
   ) {
     // no user, redirect to admin login page
     const url = request.nextUrl.clone();

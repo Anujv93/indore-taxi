@@ -2,8 +2,10 @@
 import { firebase_app } from "@firebase/config";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,14 +25,17 @@ function Login() {
   const handleLogin = async (email, password) => {
     try {
       const auth = getAuth(firebase_app);
-      signInWithEmailAndPassword(auth, email, password).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        alert(errorMessage);
-      });
-      // User successfully logged in, redirect to the inventory page
-      // Implement the redirection logic here
+      await signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          // Redirect to dashboard after successful login
+          router.push("/admin/dashboard");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+          alert(errorMessage);
+        });
     } catch (error) {
       // Handle login error
       console.log(error);
