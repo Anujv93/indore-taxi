@@ -77,7 +77,7 @@ const Hero = () => {
                 </div>
                 <div className="text-left">
                   <div className="text-sm opacity-90">WhatsApp</div>
-                  <div className="text-lg font-extrabold">+91 999 353 4100</div>
+                  <div className="text-lg font-extrabold">+91 810 907 7400</div>
                 </div>
               </div>
             </a>
